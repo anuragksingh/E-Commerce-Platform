@@ -1,3 +1,7 @@
 node_modles/
 backend/config/config.env
 *.env
+.env
+*.log
+dist/
+build/

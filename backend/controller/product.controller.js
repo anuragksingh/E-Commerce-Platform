@@ -1,6 +1,7 @@
 import Product from "../models/product.model.js";
 import HandleError from "../utils/handleError.js";
 import handleAsyncError from "../middleware/handleAsyncError.js";
+import APIFunctionality from "../utils/apiFunctionality.js";
 
 // creating product
 export const createProduct = handleAsyncError(async (req, res, next) => {
@@ -10,9 +11,15 @@ export const createProduct = handleAsyncError(async (req, res, next) => {
   });
 });
 
-// All products
+// Get All products
 export const getAllProducts = handleAsyncError(async (req, res, next) => {
-  const products = await Product.find();
+  const resultsPerPage = 3;
+  const apiFunctionality = new APIFunctionality(Product.find(), req.query)
+    .search()
+    .filter()
+    .pagination(resultsPerPage);
+
+  const products = await apiFunctionality.query;
   res.status(200).json({
     success: true,
     products,
@@ -44,7 +51,7 @@ export const deleteProduct = handleAsyncError(async (req, res, next) => {
     return next(new HandleError("Product Not Found", 500));
   }
 
-  res.status(200).json({
+  res.status(204).json({
     success: true,
     message: "Product Deleted Successfully",
   });
