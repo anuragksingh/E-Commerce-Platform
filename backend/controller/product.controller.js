@@ -44,7 +44,7 @@ export const getAllProducts = handleAsyncError(async (req, res, next) => {
     productCount,
     resultsPerPage,
     totalPages,
-    currentPage: page
+    currentPage: page,
   });
 });
 
