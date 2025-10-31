@@ -5,7 +5,6 @@ import User from "../models/user.model.js";
 
 export const verifyUserAuth = handleAsyncError(async (req, res, next) => {
   const token = req.cookies.token;
-  console.log(token);
   if (!token) {
     return next(
       new HandleError(
@@ -15,7 +14,20 @@ export const verifyUserAuth = handleAsyncError(async (req, res, next) => {
     );
   }
   const decodedDate = jwt.verify(token, process.env.JWT_KEY);
-  console.log(decodedDate);
   req.user = await User.findById(decodedDate.id);
   next();
 });
+
+export const roleBasedAccess = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new HandleError(
+          `Role - ${req.user.role} is not allowed to access the resource`,
+          403
+        )
+      );
+    }
+    next();
+  };
+};

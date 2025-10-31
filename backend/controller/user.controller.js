@@ -3,6 +3,7 @@ import User from "../models/user.model.js";
 import HandleError from "../utils/handleError.js";
 import { sendToken } from "../utils/jwtToken.js";
 
+// Register
 export const registerUser = handleAsyncError(async (req, res, next) => {
   const { name, email, password } = req.body;
   const user = await User.create({
@@ -18,7 +19,6 @@ export const registerUser = handleAsyncError(async (req, res, next) => {
 });
 
 // Login
-
 export const loginUser = handleAsyncError(async (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password) {
@@ -46,4 +46,22 @@ export const logout = handleAsyncError(async (req, res, next) => {
     success: true,
     message: "Successfully Logged out",
   });
+});
+
+// Reset Password
+export const requestPasswordReset = handleAsyncError(async (req, res, next) => {
+  const { email } = req.body;
+  const user = await User.findOne({ email });
+  if (!user) {
+    return next(new HandleError("User doesn't exist", 400));
+  }
+  let resetToken;
+  try {
+    resetToken = user.generatePasswordResetToken();
+    await user.save({ validateBeforeSave: false });
+  } catch (error) {
+    return next(
+      new HandleError("Could not save reset token please try again later", 500)
+    );
+  }
 });

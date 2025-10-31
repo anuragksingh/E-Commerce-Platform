@@ -3,6 +3,7 @@ import {
   loginUser,
   logout,
   registerUser,
+  requestPasswordReset,
 } from "../controller/user.controller.js";
 
 const router = express.Router();
@@ -10,4 +11,5 @@ const router = express.Router();
 router.route("/register").post(registerUser);
 router.route("/login").post(loginUser);
 router.route("/logout").post(logout);
+router.route("/password/forgot").post(requestPasswordReset);
 export default router;

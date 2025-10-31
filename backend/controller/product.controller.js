@@ -5,9 +5,11 @@ import APIFunctionality from "../utils/apiFunctionality.js";
 
 // creating product
 export const createProduct = handleAsyncError(async (req, res, next) => {
-  const productModel = await Product.create(req.body);
+  req.body.user = req.user.id;
+  const product = await Product.create(req.body);
   res.status(201).json({
     success: true,
+    product,
   });
 });
 
@@ -80,7 +82,7 @@ export const deleteProduct = handleAsyncError(async (req, res, next) => {
 });
 
 // Get Single Product
-export const getSinglProduct = handleAsyncError(async (req, res, next) => {
+export const getSingleProduct = handleAsyncError(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
   if (!product) {
     return next(new HandleError("Product Not Found", 500));
