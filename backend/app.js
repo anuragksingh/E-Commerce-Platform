@@ -9,6 +9,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
+
 // route
 app.use("/api/v1", product);
 app.use("/api/v1", user);

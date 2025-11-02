@@ -1,7 +1,9 @@
 import handleAsyncError from "../middleware/handleAsyncError.js";
+import crypto from "crypto";
 import User from "../models/user.model.js";
 import HandleError from "../utils/handleError.js";
 import { sendToken } from "../utils/jwtToken.js";
+import { sendEmail } from "../utils/sendEmail.js";
 
 // Register
 export const registerUser = handleAsyncError(async (req, res, next) => {
@@ -48,7 +50,7 @@ export const logout = handleAsyncError(async (req, res, next) => {
   });
 });
 
-// Reset Password
+// Forgot Password
 export const requestPasswordReset = handleAsyncError(async (req, res, next) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
@@ -62,6 +64,47 @@ export const requestPasswordReset = handleAsyncError(async (req, res, next) => {
   } catch (error) {
     return next(
       new HandleError("Could not save reset token please try again later", 500)
+    );
+  }
+  const resetPasswordURL = `http://localhost/api/v1/reset/${resetToken}`;
+  const message = `Use the following link to reset your password: ${resetPasswordURL}. \n\n This link will expire in 30 minutes. \n\n If you didn't request a password reset, please ignore this message.`;
+  try {
+    await sendEmail({
+      email,
+      subject: "Password Reset Request",
+      message,
+    });
+    res.status(200).json({
+      success: true,
+      message: `Email is sent to ${email} successfully`,
+    });
+  } catch (error) {
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+    await user.save({ validateBeforeSave: false });
+    return next(
+      new HandleError("Email couldn't be sent, please try again later", 500)
+    );
+  }
+});
+
+// Reset Password
+export const resetPassword = handleAsyncError(async (req, res, next) => {
+  const resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(req.params.token)
+    .digest("hex");
+
+  const user = await User.findOne({
+    resetPasswordToken,
+    resetPasswordExpire: { $gt: Date.now() },
+  });
+  if (!user) {
+    return next(
+      new HandleError(
+        "Reset Password token is invaild or has been expired",
+        400
+      )
     );
   }
 });
