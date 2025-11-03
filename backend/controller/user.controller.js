@@ -107,4 +107,13 @@ export const resetPassword = handleAsyncError(async (req, res, next) => {
       )
     );
   }
+  const { password, confirmPassword } = req.body;
+  if (password !== confirmPassword) {
+    return next(new HandleError("Password doesn't match", 400));
+  }
+  user.password = password;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpire = undefined;
+  await user.save();
+  sendToken(user, 200, res);
 });
