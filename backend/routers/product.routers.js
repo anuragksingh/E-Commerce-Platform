@@ -3,8 +3,10 @@ import {
   createProduct,
   createReviewAndUpdate,
   deleteProduct,
+  deleteReview,
   getAdminProducts,
   getAllProducts,
+  getProductReviews,
   getSingleProduct,
   updateProducts,
 } from "../controller/product.controller.js";
@@ -28,4 +30,8 @@ router
 
 router.route("/product/:id").get(getSingleProduct);
 router.route("/review").put(verifyUserAuth, createReviewAndUpdate);
+router
+  .route("/reviews")
+  .get(getProductReviews)
+  .delete(verifyUserAuth, deleteReview);
 export default router;

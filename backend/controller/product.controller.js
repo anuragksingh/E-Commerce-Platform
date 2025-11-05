@@ -75,7 +75,7 @@ export const deleteProduct = handleAsyncError(async (req, res, next) => {
     return next(new HandleError("Product Not Found", 500));
   }
 
-  res.status(204).json({
+  res.status(200).json({
     success: true,
     message: "Product Deleted Successfully",
   });
@@ -93,6 +93,51 @@ export const getSingleProduct = handleAsyncError(async (req, res, next) => {
   });
 });
 
+// Getting reviews
+export const getProductReviews = handleAsyncError(async (req, res, next) => {
+  const product = await Product.findById(req.query.id);
+  if (!product) {
+    return next(new HandleError("Product not found", 400));
+  }
+  res.status(200).json({
+    success: true,
+    reviews: product.reviews,
+  });
+});
+
+// Deleting Reviews
+export const deleteReview = handleAsyncError(async (req, res, next) => {
+  const product = await Product.findById(req.query.productId);
+  if (!product) {
+    return next(new HandleError("Product not found", 400));
+  }
+  const reviews = product.reviews.filter(
+    (review) => review._id.toString() !== req.query.id.toString()
+  );
+  let sum = 0;
+  reviews.forEach((review) => {
+    sum += review.rating;
+  });
+  const rating = reviews.length > 0 ? sum / reviews.length : 0;
+  const numOfReview = reviews.length;
+  await Product.findByIdAndUpdate(
+    req.query.productId,
+    {
+      reviews,
+      rating,
+      numOfReview,
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+  res.status(200).json({
+    success: true,
+    message: "Review Deleted Successfully",
+  });
+});
+
 // Creating and Updating Review
 export const createReviewAndUpdate = handleAsyncError(
   async (req, res, next) => {
@@ -104,6 +149,9 @@ export const createReviewAndUpdate = handleAsyncError(
       comment,
     };
     const product = await Product.findById(productId);
+    if (!product) {
+      return next(new HandleError("Product not found", 400));
+    }
     const reviewExists = product.reviews.find(
       (review) => review.user.toString() === req.user.id.toString()
     );
