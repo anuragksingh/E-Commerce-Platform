@@ -1,0 +1,28 @@
+:root {
+  /* ── Brand ── */
+  --primary-main:   #ff6b35;   /* orange accent */
+  --primary-dark:   #e85a20;   /* darker orange */
+  --primary-light:  #f7c59f;   /* peach */
+
+  /* ── Backgrounds ── */
+  --bg-primary:     #1c1a17;   /* dark card / navbar pill */
+  --bg-secondary:   #2a2723;   /* slightly lighter dark */
+
+  /* ── Text ── */
+  --text-primary:   #1c1a17;   /* dark text on light bg */
+  --text-secondary: #5a534d;   /* muted text */
+  --text-light:     #f7f3ee;   /* light text on dark bg */
+
+  /* ── Borders ── */
+  --border-color:   #ede8e2;   /* warm cream border */
+
+  /* ── Shadows ── */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 24px rgba(0, 0, 0, 0.12);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}

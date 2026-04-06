@@ -104,6 +104,29 @@ async function updateQuantity(id, quantity) {
   if (!product) {
     return next(new HandleError("Product not found", 404));
   }
-  product.stock -= quantity;
+  product.stock = quantity;
   await product.save({ validateBeforeSave: false });
 }
+
+// Delete Order
+export const deleteOrder = handleAsyncError(async (req, res, next) => {
+  const order = await Order.findById(req.params.id);
+  if (!order) {
+    return next(new HandleError("No order found", 404));
+  }
+
+  if (order.orderStatus !== "Delivered") {
+    return next(
+      new HandleError(
+        "This order is under processing and cannot be deleted",
+        404
+      )
+    );
+  }
+
+  await Order.deleteOne({ _id: req.params.id });
+  res.status(200).json({
+    success: true,
+    message: "Order Deleted successfully",
+  });
+});

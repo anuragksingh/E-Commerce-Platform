@@ -15,7 +15,7 @@ export const createProduct = handleAsyncError(async (req, res, next) => {
 
 // Get All products
 export const getAllProducts = handleAsyncError(async (req, res, next) => {
-  const resultsPerPage = 3;
+  const resultsPerPage = 8;
   const apiFeatures = new APIFunctionality(Product.find(), req.query)
     .search()
     .filter();
@@ -85,7 +85,7 @@ export const deleteProduct = handleAsyncError(async (req, res, next) => {
 export const getSingleProduct = handleAsyncError(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
   if (!product) {
-    return next(new HandleError("Product Not Found", 500));
+    return next(new HandleError("Product Not Found", 404));
   }
   res.status(200).json({
     success: true,

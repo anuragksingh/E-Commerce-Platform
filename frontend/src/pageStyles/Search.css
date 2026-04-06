@@ -1,0 +1,144 @@
+/* ============================================
+   Search.css — Modern Redesign
+   Matches: Apple Glass Navbar theme
+============================================ */
+
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 38px;
+  height: 38px;
+  background: #1c1a17;
+  border: none;
+  transition:
+    width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.25s ease;
+}
+
+.search-form.active {
+  width: 210px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Input — hidden until active */
+.search-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0;
+  width: 0;
+  opacity: 0;
+  pointer-events: none;
+  font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  font-size: 0.88rem;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  transition:
+    width 0.35s ease,
+    opacity 0.2s ease,
+    padding 0.2s ease;
+}
+
+.search-form.active .search-input {
+  width: 100%;
+  padding: 0 0.5rem 0 0.75rem;
+  opacity: 1;
+  pointer-events: all;
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+/* Search icon — always visible */
+.search-icon {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 38px;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  margin-left: auto;
+  transition: background 0.15s ease;
+}
+
+.search-icon:hover {
+  background: #ff6b35;
+}
+
+.search-icon:focus,
+.search-icon:active {
+  outline: none !important;
+  border: none !important;
+}
+
+/* Force MUI icon white */
+.search-icon .MuiSvgIcon-root,
+.search-icon svg {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+  font-size: 1.25rem !important;
+}
+
+.search-icon path {
+  fill: #ffffff !important;
+}
+
+/* .search-container {
+  position: relative;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  transition: width 0.3s ease;
+}
+
+.search-input {
+  width: 0;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  transition: width 0.3s ease;
+  opacity: 0;
+}
+
+.search-form.active .search-input {
+  width: 100px;
+  opacity: 1;
+}
+
+.search-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+.search-icon:focus,
+.search-icon:active {
+  outline: none !important;
+  border: none !important;
+}
+.search-icon .MuiSvgIcon-root {
+  color: #fff;
+  font-size: 1.5rem;
+
+} */

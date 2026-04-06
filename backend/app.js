@@ -4,11 +4,13 @@ import product from "./routers/product.routers.js";
 import user from "./routers/user.routers.js";
 import order from "./routers/order.routers.js";
 import errorMiddlerware from "./middleware/error.js";
+import fileUpload from "express-fileupload";
 const app = express();
 
 // Middleware
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
+app.use(fileUpload());
 
 // route
 app.use("/api/v1", product);
