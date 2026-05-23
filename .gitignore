@@ -5,3 +5,5 @@ backend/config/config.env
 *.log
 dist/
 build/
+/frontend/node_modules
+/frontend/dist

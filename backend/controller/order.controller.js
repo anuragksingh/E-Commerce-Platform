@@ -27,6 +27,7 @@ export const createNewOrder = handleAsyncError(async (req, res, next) => {
     totalPrice,
     paidAt: Date.now(),
     user: req.user._id,
+    orderStatus: "Processing",
   });
   res.status(201).json({
     success: true,
@@ -38,7 +39,7 @@ export const createNewOrder = handleAsyncError(async (req, res, next) => {
 export const getSingleOrder = handleAsyncError(async (req, res, next) => {
   const order = await Order.findById(req.params.id).populate(
     "user",
-    "name email"
+    "name email",
   );
   if (!order) {
     return next(new HandleError("No order found", 404));
@@ -86,7 +87,7 @@ export const updateOrderStatus = handleAsyncError(async (req, res, next) => {
   }
 
   await Promise.all(
-    order.orderItems.map((item) => updateQuantity(item.product, item.quantity))
+    order.orderItems.map((item) => updateQuantity(item.product, item.quantity)),
   );
   order.orderStatus = req.body.status;
   if (order.orderStatus === "Delivered") {
@@ -102,7 +103,7 @@ export const updateOrderStatus = handleAsyncError(async (req, res, next) => {
 async function updateQuantity(id, quantity) {
   const product = await Product.findById(id);
   if (!product) {
-    return next(new HandleError("Product not found", 404));
+    throw new Error("Product not found");
   }
   product.stock = quantity;
   await product.save({ validateBeforeSave: false });
@@ -119,8 +120,8 @@ export const deleteOrder = handleAsyncError(async (req, res, next) => {
     return next(
       new HandleError(
         "This order is under processing and cannot be deleted",
-        404
-      )
+        404,
+      ),
     );
   }
 

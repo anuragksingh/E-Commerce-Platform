@@ -36,7 +36,8 @@
   .orders-table th {
     background-color: var(--bg-secondary);
     font-weight: bold;
-    color: var(--text-primary);
+    color: #fff;
+    /* color: var(--text-primary); */
   }
   
   .orders-table tbody tr:nth-child(even) {

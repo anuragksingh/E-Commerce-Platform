@@ -18,6 +18,18 @@ import Cart from "./Cart/Cart";
 import Shipping from "./Cart/Shipping";
 import OrderConfirm from "./Cart/OrderConfirm";
 import Payment from "./Cart/Payment";
+import PaymentSuccess from "./Cart/PaymentSuccess";
+import MyOrders from "./Orders/MyOrders";
+import OrderDetails from "./Orders/OrderDetails";
+import Dashboard from "./Admin/Dashboard";
+import ProductsList from "./Admin/ProductsList";
+import CreateProduct from "./Admin/CreateProduct";
+import UpdateProduct from "./Admin/UpdateProduct";
+import UsersList from "./Admin/UsersList";
+import UpdateRole from "./Admin/UpdateRole";
+import OrdersList from "./Admin/OrdersList";
+import UpdateOrder from "./Admin/UpdateOrder";
+import ReviewsList from "./Admin/ReviewsList";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -63,6 +75,66 @@ function App() {
         <Route path="/password/forgot" element={<ForgotPassword />} />
         <Route path="/reset/:token" element={<ResetPassword />} />
         <Route path="/cart" element={<Cart />} />
+        <Route
+          path="/paymentSuccess"
+          element={<ProtectedRoute element={<PaymentSuccess />} />}
+        />
+        <Route
+          path="/orders/user"
+          element={<ProtectedRoute element={<MyOrders />} />}
+        />
+
+        <Route
+          path="/order/:orderId"
+          element={<ProtectedRoute element={<OrderDetails />} />}
+        />
+        {/* AdminOnly Routes */}
+        <Route
+          path="/admin/dashboard"
+          element={<ProtectedRoute element={<Dashboard />} adminOnly={true} />}
+        />
+        <Route
+          path="/admin/products"
+          element={
+            <ProtectedRoute element={<ProductsList />} adminOnly={true} />
+          }
+        />
+        <Route
+          path="/admin/product/create"
+          element={
+            <ProtectedRoute element={<CreateProduct />} adminOnly={true} />
+          }
+        />
+        <Route
+          path="/admin/product/:updateId"
+          element={
+            <ProtectedRoute element={<UpdateProduct />} adminOnly={true} />
+          }
+        />
+        <Route
+          path="/admin/users"
+          element={<ProtectedRoute element={<UsersList />} adminOnly={true} />}
+        />
+        <Route
+          path="/admin/user/:userId"
+          element={<ProtectedRoute element={<UpdateRole />} adminOnly={true} />}
+        />
+        <Route
+          path="/admin/orders"
+          element={<ProtectedRoute element={<OrdersList />} adminOnly={true} />}
+        />
+        <Route
+          path="/admin/order/:orderId"
+          element={
+            <ProtectedRoute element={<UpdateOrder />} adminOnly={true} />
+          }
+        />
+        <Route
+          path="/admin/reviews"
+          element={
+            <ProtectedRoute element={<ReviewsList />} adminOnly={true} />
+          }
+        />
       </Routes>
       {isAuthenticated && <UserDashboard user={user} />}
     </Router>
