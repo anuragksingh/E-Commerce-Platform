@@ -16,8 +16,6 @@ export const createOrder = createAsyncThunk(
 
       const { data } = await axios.post("/api/v1/new/order", order, config);
 
-      console.log("Order Data", data);
-
       return data;
     } catch (error) {
       return rejectWithValue(

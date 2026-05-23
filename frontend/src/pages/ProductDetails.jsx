@@ -36,7 +36,7 @@ function ProductDetails() {
     message,
     cartItems,
   } = useSelector((state) => state.cart);
-  console.log(cartItems);
+ 
 
   const dispatch = useDispatch();
   const { id } = useParams();

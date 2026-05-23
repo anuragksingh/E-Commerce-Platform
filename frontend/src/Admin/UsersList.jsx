@@ -25,7 +25,6 @@ const UsersList = () => {
   useEffect(() => {
     dispatch(fetchUsers());
   }, [dispatch]);
-  console.log(users);
 
   useEffect(() => {
     if (error) {

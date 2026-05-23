@@ -17,7 +17,7 @@ export const getProduct = createAsyncThunk(
       //   ? `/api/v1/products?keyword=${encodeURIComponent(keyword)}&page=${page}`
       //   : `/api/v1/products?page=${page}`;
       const { data } = await axios.get(link);
-      // console.log("Response", data);
+  
       return data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "An error occurred");
@@ -89,7 +89,6 @@ const productSlice = createSlice({
         ((state.loading = true), (state.error = null));
       })
       .addCase(getProduct.fulfilled, (state, action) => {
-        // console.log("Fulfilled action payload", action.payload);
         state.loading = false;
         state.error = null;
         state.products = action.payload.product;
@@ -109,7 +108,7 @@ const productSlice = createSlice({
         state.error = null;
       })
       .addCase(getProductDetails.fulfilled, (state, action) => {
-        console.log("Product Details", action.payload);
+       
         state.loading = false;
         state.error = null;
         state.product = action.payload.product;

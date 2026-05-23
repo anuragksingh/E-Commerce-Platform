@@ -8,7 +8,6 @@ function Product({ product }) {
   const [comment, setComment] = useState("");
   const handleRatingChange = (newRating) => {
     setRating(newRating);
-    console.log(`Rating changed to: ${newRating}`);
   };
 
   return (

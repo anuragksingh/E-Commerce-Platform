@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 function Shipping() {
   const { shippingInfo } = useSelector((state) => state.cart);
-  console.log(shippingInfo);
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -158,4 +158,3 @@ function Shipping() {
 }
 export default Shipping;
 
-// 06-04-2026 20:50:04

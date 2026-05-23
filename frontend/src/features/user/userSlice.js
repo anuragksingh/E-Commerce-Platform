@@ -228,7 +228,7 @@ const userSlice = createSlice({
           (state.success = action.payload.success),
           (state.user = action.payload?.user || null),
           (state.isAuthenticated = Boolean(action.payload?.user)));
-        console.log(state.user);
+      
 
         /* Storing user in localStorage */
         localStorage.setItem("user", JSON.stringify(state.user));

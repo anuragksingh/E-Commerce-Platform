@@ -52,11 +52,9 @@ function PaymentSuccess() {
           totalPrice: orderItem.totalBill,
         };
 
-        console.log("Sending data ", orderData);
         dispatch(createOrder(orderData));
         sessionStorage.removeItem("orderItem");
       } catch (error) {
-        console.log("Order Creation Error", error.message);
         toast.error(error.message || "Order Creation Error");
       }
     };

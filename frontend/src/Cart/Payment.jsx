@@ -37,7 +37,7 @@ function Payment() {
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_signature: response.razorpay_signature,
           });
-          console.log("BACKEND RESPONSE:", data);
+
           if (data.success) {
             navigate(`/paymentSuccess?reference=${data.reference}`);
           } else {
@@ -83,4 +83,4 @@ function Payment() {
 }
 export default Payment;
 
-// 06-05-2025 21:50:15
+

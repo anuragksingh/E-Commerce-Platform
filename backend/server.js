@@ -6,6 +6,12 @@ import { conectMongoDatabase } from "./config/db.js";
 import { v2 as cloudinary } from "cloudinary";
 import Razorpay from "razorpay";
 
+// Disable Logs
+if (process.env.NODE_ENV === "PRODUCTION") {
+  console.log = () => {};
+  console.warn = () => {};
+}
+
 // Database Connection
 conectMongoDatabase();
 
@@ -28,23 +34,16 @@ export const instance = new Razorpay({
 
 // Uncaught Exception
 process.on("uncaughtException", (err) => {
-  console.log(`Error: ${err.message}`);
-  console.log("Server is shutting down due to uncaught exception");
   process.exit(1);
 });
 
 // Server
 const port = process.env.PORT || 8000;
 
-const server = app.listen(port, () => {
-  console.log(`Server is Running on PORT ${port}`);
-});
+const server = app.listen(port);
 
 // Unhandled Promise Rejection
 process.on("unhandledRejection", (err) => {
-  console.log(`Error: ${err.message}`);
-  console.log("Server is shutting down due to unhandled promise rejection");
-
   server.close(() => {
     process.exit(1);
   });
