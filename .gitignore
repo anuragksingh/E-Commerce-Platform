@@ -1,9 +1,5 @@
-node_modules/
-backend/config/config.env
-*.env
-.env
-*.log
-dist/
-build/
+/node_modules
+backend/config/config.env 
 /frontend/node_modules
 /frontend/dist
+ 
