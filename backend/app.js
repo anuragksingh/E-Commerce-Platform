@@ -30,7 +30,7 @@ app.use("/api/v1", payment);
 app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
 // Catch-all for React Router
-app.get("*", (req, res) => {
+app.get("/{*splat}", (req, res) => {
   res.sendFile(path.resolve(__dirname, "../frontend/dist/index.html"));
 });
 
