@@ -17,7 +17,12 @@ const app = express();
 // Middleware
 app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
-app.use(fileUpload());
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "/tmp/",
+  }),
+);
 app.use(express.urlencoded({ extended: true }));
 
 // Routes

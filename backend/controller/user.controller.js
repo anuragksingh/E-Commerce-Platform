@@ -167,10 +167,11 @@ export const updatePassword = handleAsyncError(async (req, res, next) => {
 //     user,
 //   });
 // });
-export const updateProfile = handleAsyncError(async (req, res, next) => {
-  const { name, email, avatar } = req.body;
 
-  // 1. Required fields
+export const updateProfile = handleAsyncError(async (req, res, next) => {
+  const { name, email } = req.body;
+
+  // REQUIRED FIELDS
   if (!name || !email) {
     return res.status(400).json({
       success: false,
@@ -178,8 +179,9 @@ export const updateProfile = handleAsyncError(async (req, res, next) => {
     });
   }
 
-  // 2. Email format check
+  // EMAIL VALIDATION
   const emailRegex = /^\S+@\S+\.\S+$/;
+
   if (!emailRegex.test(email)) {
     return res.status(400).json({
       success: false,
@@ -187,27 +189,45 @@ export const updateProfile = handleAsyncError(async (req, res, next) => {
     });
   }
 
+  // CURRENT USER
   const currentUser = await User.findById(req.user.id);
 
-  // 3. No changes case
-  if (currentUser.name === name && currentUser.email === email) {
-    return res.status(200).json({
+  if (!currentUser) {
+    return res.status(404).json({
       success: false,
-      message: "No changes made",
+      message: "User not found",
     });
   }
 
-  // 3.1 Avatar Updating process
+  // DUPLICATE EMAIL CHECK
+  const existingUser = await User.findOne({
+    email,
+  });
 
+  if (existingUser && existingUser._id.toString() !== req.user.id) {
+    return res.status(400).json({
+      success: false,
+      message: "Email already exists",
+    });
+  }
+
+  // UPDATE OBJECT
   const updateUserDetails = {
     name,
     email,
   };
 
-  if (avatar !== "") {
-    const imageId = currentUser.avatar.public_id;
-    await cloudinary.uploader.destroy(imageId);
-    const myCloud = await cloudinary.uploader.upload(avatar, {
+  // AVATAR UPDATE
+  if (req.files && req.files.avatar) {
+    const avatarFile = req.files.avatar;
+
+    // DELETE OLD IMAGE
+    if (currentUser.avatar && currentUser.avatar.public_id) {
+      await cloudinary.uploader.destroy(currentUser.avatar.public_id);
+    }
+
+    // UPLOAD NEW IMAGE
+    const myCloud = await cloudinary.uploader.upload(avatarFile.tempFilePath, {
       folder: "avatars",
       width: 150,
       crop: "scale",
@@ -219,17 +239,19 @@ export const updateProfile = handleAsyncError(async (req, res, next) => {
     };
   }
 
-  // 4. Duplicate email check
-  const existingUser = await User.findOne({ email });
-
-  if (existingUser && existingUser._id.toString() !== req.user.id) {
-    return res.status(400).json({
+  // NO CHANGES CHECK
+  if (
+    currentUser.name === name &&
+    currentUser.email === email &&
+    !req.files?.avatar
+  ) {
+    return res.status(200).json({
       success: false,
-      message: "Email already exists",
+      message: "No changes made",
     });
   }
 
-  // 5. Update
+  // UPDATE USER
   const user = await User.findByIdAndUpdate(req.user.id, updateUserDetails, {
     new: true,
     runValidators: true,
@@ -294,7 +316,7 @@ export const deleteUser = handleAsyncError(async (req, res, next) => {
 
   const imageId = user.avatar.public_id;
   await cloudinary.uploader.destroy(imageId);
-  
+
   await User.findByIdAndDelete(req.params.id);
   res.status(200).json({
     success: true,

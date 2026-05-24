@@ -5,89 +5,113 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 import {
   removeSuccess,
   updateProfile,
   removeErrors,
 } from "../features/user/userSlice";
+
 import Loader from "../components/Loader";
 
 function UpdateProfile() {
-  const { user, error, success, message, loading } = useSelector(
-    (state) => state.user
-  );
+  const { user, error, success, message, loading } =
+    useSelector((state) => state.user);
 
-  // 🔴 form state
+  // FORM STATES
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [avatar, setAvatar] = useState("");
-  const [avatarPreview, setAvatarPreview] = useState(
-  () => user?.avatar?.url || "./imagesprofile.png"
-);
 
-  // 🔴 track if user started typing
-  const [nameTouched, setNameTouched] = useState(false);
-  const [emailTouched, setEmailTouched] = useState(false);
+  // STORE REAL FILE
+  const [avatar, setAvatar] = useState(null);
+
+  // IMAGE PREVIEW
+  const [avatarPreview, setAvatarPreview] =
+    useState(
+      () =>
+        user?.avatar?.url ||
+        "./imagesprofile.png"
+    );
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // 🔴 image handler
+  // SET USER DATA
+  useEffect(() => {
+    if (user) {
+      setName(user.name || "");
+      setEmail(user.email || "");
+
+      setAvatarPreview(
+        user?.avatar?.url ||
+          "./imagesprofile.png"
+      );
+    }
+  }, [user]);
+
+  // IMAGE CHANGE HANDLER
   const profileImageUpdate = (e) => {
     const file = e.target.files[0];
+
     if (!file) return;
 
-    const reader = new FileReader();
+    // STORE ACTUAL FILE
+    setAvatar(file);
 
-    reader.onload = () => {
-      if (reader.readyState === 2) {
-        setAvatarPreview(reader.result);
-        setAvatar(reader.result);
-      }
-    };
-
-    reader.onerror = () => {
-      toast.error("Error reading file");
-    };
-
-    reader.readAsDataURL(file);
+    // PREVIEW IMAGE
+    setAvatarPreview(
+      URL.createObjectURL(file)
+    );
   };
 
-  // 🔴 submit
+  // FORM SUBMIT
   const updateSubmit = (e) => {
     e.preventDefault();
 
     const myForm = new FormData();
 
-    // fallback only at submit time
-    myForm.set("name", nameTouched ? name : user?.name);
-    myForm.set("email", emailTouched ? email : user?.email);
+    myForm.set("name", name);
+    myForm.set("email", email);
 
+    // SEND FILE
     if (avatar) {
-      myForm.set("avatar", avatar);
+      myForm.append("avatar", avatar);
     }
 
     dispatch(updateProfile(myForm));
   };
 
-  // 🔴 response handling
+  // RESPONSE HANDLING
   useEffect(() => {
     if (error) {
       toast.error(error);
+
       dispatch(removeErrors());
     }
 
-    if (message && success === false) {
+    if (
+      message &&
+      success === false
+    ) {
       toast.info(message);
+
       dispatch(removeSuccess());
     }
 
     if (success) {
       toast.success(message);
+
       dispatch(removeSuccess());
+
       navigate("/profile");
     }
-  }, [dispatch, error, success, message, navigate]);
+  }, [
+    dispatch,
+    error,
+    success,
+    message,
+    navigate,
+  ]);
 
   return (
     <>
@@ -106,49 +130,66 @@ function UpdateProfile() {
               >
                 <h2>Update Profile</h2>
 
+                {/* PROFILE IMAGE */}
                 <div className="input-group avatar-group">
                   <input
                     type="file"
                     accept="image/*"
                     className="file-input"
                     name="avatar"
-                    onChange={profileImageUpdate}
+                    onChange={
+                      profileImageUpdate
+                    }
                   />
+
                   <img
-                    src={avatarPreview || user?.avatar?.url}
+                    src={avatarPreview}
                     alt="User Profile"
                     className="avatar"
                   />
                 </div>
 
+                {/* NAME */}
                 <div className="input-group">
                   <input
                     type="text"
-                    value={nameTouched ? name : user?.name || ""}
-                    onChange={(e) => {
-                      setNameTouched(true);
-                      setName(e.target.value);
-                    }}
+                    value={name}
+                    onChange={(e) =>
+                      setName(
+                        e.target.value
+                      )
+                    }
+                    placeholder="Enter your name"
                   />
                 </div>
 
+                {/* EMAIL */}
                 <div className="input-group">
                   <input
                     type="email"
-                    value={emailTouched ? email : user?.email || ""}
-                    onChange={(e) => {
-                      setEmailTouched(true);
-                      setEmail(e.target.value);
-                    }}
+                    value={email}
+                    onChange={(e) =>
+                      setEmail(
+                        e.target.value
+                      )
+                    }
+                    placeholder="Enter your email"
                   />
                 </div>
 
-                <button className="authBtn" disabled={loading}>
-                  {loading ? "Updating..." : "Update"}
+                {/* SUBMIT BUTTON */}
+                <button
+                  className="authBtn"
+                  disabled={loading}
+                >
+                  {loading
+                    ? "Updating..."
+                    : "Update"}
                 </button>
               </form>
             </div>
           </div>
+
           <Footer />
         </>
       )}

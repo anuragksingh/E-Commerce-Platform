@@ -32,7 +32,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: #faf8f5;
+  background: #0a0a0a;
 }
 
 /* ── Loader — Double Ring Glow ── */
@@ -42,7 +42,7 @@
   height: 56px;
 }
 
-/* Outer ring */
+/* Outer ring — orange accent */
 .loader::before {
   content: '';
   position: absolute;
@@ -50,20 +50,20 @@
   border-radius: 50%;
   border: 3px solid transparent;
   border-top-color: #ff6b35;
-  border-right-color: #f7c59f;
+  border-right-color: #ff8c5a;
   animation: spinOuter 0.9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  filter: drop-shadow(0 0 6px rgba(255, 107, 53, 0.5));
+  filter: drop-shadow(0 0 6px rgba(255, 107, 53, 0.4));
 }
 
-/* Inner ring */
+/* Inner ring — dark surface */
 .loader::after {
   content: '';
   position: absolute;
   inset: 10px;
   border-radius: 50%;
   border: 3px solid transparent;
-  border-bottom-color: #1c1a17;
-  border-left-color: #3d3530;
+  border-bottom-color: #2c2b28;
+  border-left-color: #1c1b19;
   animation: spinInner 0.7s cubic-bezier(0.4, 0, 0.2, 1) infinite reverse;
 }
 

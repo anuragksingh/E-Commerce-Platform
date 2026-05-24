@@ -1,37 +1,51 @@
 /* ============================================
-   Navbar.css — Apple Glass Navbar
-   Search icon right-side, expands inline
-   Zero JSX changes
+   Navbar.css — FINAL RESPONSIVE VERSION
 ============================================ */
 
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
 
-/* ── Navbar ── */
+/* =========================================
+   NAVBAR
+========================================= */
+
 .navbar {
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 1000;
+  z-index: 1100;
+
   background: rgba(255, 255, 255, 0.78);
+
   backdrop-filter: saturate(200%) blur(24px);
   -webkit-backdrop-filter: saturate(200%) blur(24px);
+
   border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
+
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.7) inset,
     0 2px 12px rgba(0, 0, 0, 0.04);
+
   transition: background 0.3s ease;
 }
 
-/* ── Container ── */
+/* =========================================
+   CONTAINER
+========================================= */
+
 .navbar-container {
   max-width: 1200px;
+
   margin: 0 auto;
+
   padding: 0 2rem;
+
   height: 4rem;
+
   display: flex;
   align-items: center;
-  justify-content: space-between;
+
   gap: 1rem;
+
   font-family:
     "Plus Jakarta Sans",
     -apple-system,
@@ -39,18 +53,29 @@
     sans-serif;
 }
 
-/* ── Logo ── */
+/* =========================================
+   LOGO
+========================================= */
+
+.navbar-logo {
+  flex-shrink: 0;
+}
+
 .navbar-logo a {
   font-family:
     "Plus Jakarta Sans",
     -apple-system,
     sans-serif;
+
   font-size: 1.3rem;
   font-weight: 700;
+
   color: #1d1d1f;
+
   text-decoration: none;
+
   letter-spacing: -0.03em;
-  flex-shrink: 0;
+
   transition: opacity 0.18s ease;
 }
 
@@ -58,17 +83,21 @@
   opacity: 0.6;
 }
 
-/* ── Nav Links ── */
+/* =========================================
+   NAV LINKS
+========================================= */
+
 .navbar-links {
-  flex: 1;
   margin-left: 2.5rem;
-  transition: all 0.3s ease;
 }
 
 .navbar-links ul {
   display: flex;
+
   list-style: none;
+
   gap: 2.25rem;
+
   margin: 0;
   padding: 0;
 }
@@ -78,51 +107,78 @@
     "Plus Jakarta Sans",
     -apple-system,
     sans-serif;
+
   color: #1d1d1f;
+
   text-decoration: none;
+
   font-weight: 400;
+
   font-size: 0.9rem;
+
   letter-spacing: -0.01em;
+
   opacity: 0.7;
+
   position: relative;
+
   transition: opacity 0.15s ease;
 }
 
-/* Slim underline on hover */
 .navbar-links li a::after {
   content: "";
+
   position: absolute;
+
   bottom: -4px;
   left: 0;
+
   width: 0;
   height: 1.5px;
+
   background: #ff6b35;
+
   border-radius: 1px;
+
   transition: width 0.22s ease;
 }
 
 .navbar-links li a:hover {
   opacity: 1;
 }
+
 .navbar-links li a:hover::after {
   width: 100%;
 }
 
-/* ── Right side icons ── */
+/* =========================================
+   RIGHT SECTION
+========================================= */
+
 .navbar-icons {
+  margin-left: auto;
+
   display: flex;
   align-items: center;
-  gap: 0.35rem;
+
+  gap: 0.5rem;
+
   flex-shrink: 0;
-  width: auto;
 }
 
-/* Shared icon style */
+/* =========================================
+   ICONS
+========================================= */
+
 .icon {
   color: #1d1d1f;
+
   cursor: pointer;
+
   opacity: 0.65;
+
   font-size: 1.25rem !important;
+
   transition:
     opacity 0.15s ease,
     color 0.15s ease,
@@ -134,58 +190,65 @@
   color: #ff6b35;
 }
 
-/* ── Search ── */
+/* =========================================
+   SEARCH
+========================================= */
+
 .search-container {
   display: flex;
   align-items: center;
   justify-content: center;
+
   height: 38px;
 }
 
 .search-form {
   display: flex;
   align-items: center;
-  justify-content: center;
-  flex-direction: row;
+
   border-radius: 10px;
+
   overflow: hidden;
+
   width: 38px;
   height: 38px;
+
   background: #1d1d1f;
-  border: none;
+
   transition:
     width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
     box-shadow 0.25s ease;
 }
 
 .search-form.active {
-  flex-direction: row;
   width: 210px;
+
   box-shadow:
     0 0 0 3px rgba(255, 107, 53, 0.1),
     0 2px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* Search input */
 .search-input {
   border: none;
   outline: none;
+
   background: transparent;
-  padding: 0;
+
   font-family:
     "Plus Jakarta Sans",
     -apple-system,
     sans-serif;
+
   font-size: 0.88rem;
+
   color: #ffffff;
+
   width: 0;
+
   opacity: 0;
+
   pointer-events: none;
-  transition:
-    width 0.35s ease,
-    opacity 0.2s ease,
-    padding 0.35s ease;
-  letter-spacing: -0.01em;
+
   transition:
     width 0.35s ease,
     opacity 0.2s ease,
@@ -194,8 +257,11 @@
 
 .search-form.active .search-input {
   width: 100%;
+
   padding: 0 0.5rem 0 0.75rem;
+
   opacity: 1;
+
   pointer-events: all;
 }
 
@@ -203,24 +269,25 @@
   color: rgba(255, 255, 255, 0.35);
 }
 
-/* Search icon button — always visible */
 .search-icon {
   background: transparent;
+
   border: none;
+
   cursor: pointer;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   min-width: 38px;
   width: 38px;
   height: 38px;
-  flex-shrink: 0;
+
   border-radius: 10px;
+
   color: #ffffff !important;
-  opacity: 1;
-  margin-top: 0;
-  vertical-align: middle;
-  margin-left: auto;
+
   transition: background 0.15s ease;
 }
 
@@ -228,26 +295,29 @@
   background: #ff6b35;
 }
 
-.search-form.active .search-icon {
-  opacity: 1;
-  color: #ff6b35;
-}
+/* =========================================
+   CART
+========================================= */
 
-/* ── Cart ── */
 .cart-container {
   position: relative;
+
   display: flex;
   align-items: center;
-  order: 2;
 }
 
 .cart-container a {
   display: flex;
   align-items: center;
+
   color: #1d1d1f;
+
   opacity: 0.65;
+
   padding: 0.3rem;
+
   border-radius: 10px;
+
   transition:
     opacity 0.15s ease,
     color 0.15s ease,
@@ -257,41 +327,59 @@
 
 .cart-container a:hover {
   opacity: 1;
+
   color: #ff6b35;
+
   background: rgba(255, 107, 53, 0.08);
+
   transform: scale(1.06);
 }
 
 .cart-badge {
   position: absolute;
+
   top: 0px;
   right: 0px;
+
   background: #ff6b35;
+
   color: #fff;
+
   font-size: 0.6rem;
   font-weight: 700;
+
   min-width: 16px;
   height: 16px;
+
   border-radius: 9999px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   padding: 0 3px;
+
   border: 1.5px solid rgba(255, 255, 255, 0.9);
-  font-family: -apple-system, sans-serif;
-  pointer-events: none;
 }
 
-/* ── Register link ── */
+/* =========================================
+   REGISTER
+========================================= */
+
 .register-link {
   text-decoration: none;
+
   display: flex;
   align-items: center;
-  order: 3;
+
   color: #1d1d1f;
+
   opacity: 0.65;
+
   padding: 0.3rem;
+
   border-radius: 10px;
+
   transition:
     opacity 0.15s ease,
     color 0.15s ease,
@@ -300,46 +388,29 @@
 
 .register-link:hover {
   opacity: 1;
+
   color: #ff6b35;
+
   background: rgba(255, 107, 53, 0.08);
 }
 
-.register-btn {
-  background: #ff6b35;
-  color: #fff;
-  padding: 0.45rem 1.1rem;
-  border-radius: 20px;
-  border: none;
-  font-weight: 500;
-  font-size: 0.85rem;
-  font-family:
-    "Plus Jakarta Sans",
-    -apple-system,
-    sans-serif;
-  cursor: pointer;
-  height: 34px;
-  display: flex;
-  align-items: center;
-  letter-spacing: -0.01em;
-  transition:
-    background 0.2s ease,
-    transform 0.2s ease;
-}
+/* =========================================
+   HAMBURGER
+========================================= */
 
-.register-btn:hover {
-  background: #e85a20;
-  transform: scale(1.03);
-}
-
-/* ── Hamburger ── */
 .navbar-hamburger {
   display: none;
+
   cursor: pointer;
+
   padding: 0.3rem;
+
   border-radius: 8px;
+
   color: #1d1d1f;
+
   opacity: 0.7;
-  order: 4;
+
   transition:
     opacity 0.15s ease,
     background 0.15s ease;
@@ -347,48 +418,66 @@
 
 .navbar-hamburger:hover {
   opacity: 1;
+
   background: rgba(0, 0, 0, 0.05);
 }
 
-/* ── Focus ── */
+/* =========================================
+   FOCUS
+========================================= */
+
 a:focus,
 button:focus {
   outline: 2px solid #ff6b35;
   outline-offset: 2px;
 }
 
-/* ── Mobile ── */
+/* =========================================
+   MOBILE
+========================================= */
+
 @media (max-width: 768px) {
+
   .navbar {
     background: rgba(255, 255, 255, 0.92);
   }
 
   .navbar-container {
-    padding: 0 1.25rem;
+    padding: 0 1rem;
   }
 
   .navbar-links {
     display: none;
+
     position: absolute;
+
     top: 4rem;
     left: 0;
     right: 0;
+
     margin-left: 0;
+
     background: rgba(252, 252, 254, 0.96);
+
     backdrop-filter: saturate(180%) blur(20px);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
+
     border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
+
     padding: 0.25rem 1.5rem 1rem;
+
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
   }
 
   .navbar-links.active {
     display: block;
+
     animation: slideDown 0.2s ease;
   }
 
   .navbar-links ul {
     flex-direction: column;
+
     gap: 0;
   }
 
@@ -402,38 +491,50 @@ button:focus {
 
   .navbar-links li a {
     display: block;
+
     padding: 0.9rem 0;
+
     font-size: 1rem;
+
     opacity: 0.85;
-  }
-
-  .navbar-icons {
-    gap: 0.15rem;
-    width: auto;
-  }
-
-  .navbar-hamburger {
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 
   .search-form.active {
     width: 160px;
   }
+
+  /* HIDE PROFILE IN MOBILE */
+
+  .dashboard-container {
+    display: none !important;
+  }
+
+  /* SHOW HAMBURGER */
+
+  .navbar-hamburger {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+  }
 }
 
+/* =========================================
+   ANIMATION
+========================================= */
+
 @keyframes slideDown {
+
   from {
     opacity: 0;
     transform: translateY(-8px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
-
 /* 
 .navbar {
     position: fixed;

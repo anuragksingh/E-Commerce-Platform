@@ -1,8 +1,168 @@
+/* =========================================
+   USER DASHBOARD
+========================================= */
+
+.dashboard-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+}
+
+/* =========================================
+   PROFILE BUTTON
+========================================= */
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+
+  cursor: pointer;
+
+  padding: 4px 12px 4px 4px;
+
+  border-radius: 50px;
+
+  background: #1c1a17;
+
+  border: 1px solid rgba(255,255,255,0.08);
+
+  transition: all 0.25s ease;
+}
+
+.profile-header:hover {
+  background: #2a2723;
+  transform: translateY(-1px);
+}
+
+/* =========================================
+   AVATAR
+========================================= */
+
+.profile-avatar_u {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+
+  border-radius: 50%;
+
+  object-fit: cover;
+  object-position: center top;
+
+  border: 2px solid #ff6b35;
+}
+
+/* =========================================
+   NAME
+========================================= */
+
+.profile-name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #f0ece6;
+
+  max-width: 90px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =========================================
+   DROPDOWN
+========================================= */
+
+.menu-options {
+  position: absolute;
+
+  top: 58px;
+  right: 0;
+
+  width: 190px;
+
+  background: #1c1a17;
+
+  border-radius: 18px;
+
+  padding: 6px;
+
+  z-index: 1200;
+
+  box-shadow:
+    0 24px 64px rgba(0,0,0,0.4);
+}
+
+.menu-option-btn {
+  width: 100%;
+
+  border: none;
+  background: transparent;
+
+  color: #c8c2bc;
+
+  padding: 0.8rem 1rem;
+
+  border-radius: 12px;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.menu-option-btn:hover {
+  background: rgba(255,107,53,0.12);
+  color: #ff6b35;
+}
+
+.cart-not-empty {
+  color: #ff6b35;
+}
+
+/* =========================================
+   OVERLAY
+========================================= */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0,0,0,0.3);
+
+  visibility: hidden;
+  opacity: 0;
+
+  transition: opacity 0.25s ease;
+
+  z-index: 1099;
+}
+
+.overlay.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+  /* HIDE PROFILE */
+  .dashboard-container {
+    display: none !important;
+  }
+}
+
 /* ============================================
    UserDashboard.css — Fresh Unique Design
    Aesthetic: Minimal Dark Pill + Warm Dropdown
    Zero JSX changes
 ============================================ */
+
 /* 
 .profile-header {
     display: flex;
@@ -114,270 +274,3 @@
     }
   } 
  */
-
-/* ============================================
-   UserDashboard.css — Modern Unique Design
-   Uses your CSS variables + orange accent
-   Zero JSX changes
-============================================ */
-
-/* ============================================
-   UserDashboard.css — Final Version
-   All fixes applied — dropdown fully visible
-============================================ */
-
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
-
-/* ── Wrapper ── */
-.dashboard-container {
-  position: fixed;
-  top: 8px;
-  right: 1.5rem;
-  z-index: 1001;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-}
-
-/* ── Profile Trigger Pill ── */
-.profile-header {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  cursor: pointer;
-  padding: 5px 14px 5px 5px;
-  border-radius: 50px;
-  background: #1c1a17;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow:
-    0 4px 16px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  position: static;
-  top: unset;
-  right: unset;
-  margin: 0;
-  transition:
-    background 0.22s ease,
-    box-shadow 0.22s ease,
-    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.profile-header:hover {
-  background: #2a2723;
-  transform: translateY(-2px);
-  box-shadow:
-    0 8px 28px rgba(0, 0, 0, 0.35),
-    0 0 0 1px rgba(255, 107, 53, 0.35);
-}
-
-/* ── Avatar ── */
-.profile-avatar_u {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: center top;
-  border: 2px solid #ff6b35;
-  box-shadow: 0 0 0 2px rgba(255, 107, 53, 0.25);
-  flex-shrink: 0;
-  display: block;
-  transition:
-    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 0.25s ease;
-}
-
-.profile-header:hover .profile-avatar_u {
-  transform: scale(1.1) rotate(-3deg);
-  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.5);
-}
-
-/* ── Name ── */
-.profile-name {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #f0ece6;
-  white-space: nowrap;
-  max-width: 110px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  letter-spacing: 0.01em;
-}
-
-/* ── Dropdown Menu ── */
-.menu-options {
-  position: fixed;
-  top: 60px;
-  right: 1.5rem;
-  left: auto;
-  width: 200px;
-  z-index: 1002;
-  padding: 6px;
-  border-radius: 20px;
-
-  /* No overflow hidden — fixes logout being cut off */
-  overflow: visible;
-
-  background: #1c1a17;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  box-shadow:
-    0 24px 64px rgba(0, 0, 0, 0.5),
-    0 8px 24px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(255, 107, 53, 0.08);
-
-  animation: dropDown 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-  transform-origin: top right;
-}
-
-/* Orange top strip */
-.menu-options::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #ff6b35, #f7c59f, transparent);
-  border-radius: 20px 20px 0 0;
-  pointer-events: none;
-}
-
-/* ── Menu Buttons ── */
-.menu-option-btn {
-  width: 100%;
-  padding: 0.7rem 1rem;
-  margin-bottom: 2px;
-  border: none;
-  border-radius: 12px;
-  background: transparent;
-  color: #c8c2bc;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  text-align: left;
-  letter-spacing: 0.01em;
-  position: relative;
-  display: block !important;
-  visibility: visible !important;
-  transition:
-    background 0.18s ease,
-    color 0.18s ease,
-    padding-left 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.menu-option-btn:last-child {
-  margin-bottom: 0;
-}
-
-/* Arrow indicator */
-.menu-option-btn::before {
-  content: '▸';
-  position: absolute;
-  left: 0.9rem;
-  opacity: 0;
-  color: #ff6b35;
-  font-size: 0.7rem;
-  transition: opacity 0.15s ease, transform 0.2s ease;
-  transform: translateX(-6px);
-}
-
-.menu-option-btn:hover {
-  background: rgba(255, 107, 53, 0.12);
-  color: #ff6b35;
-  padding-left: 1.75rem;
-}
-
-.menu-option-btn:hover::before {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-/* Cart highlight */
-.cart-not-empty {
-  background: rgba(255, 107, 53, 0.1) !important;
-  color: #ff6b35 !important;
-  border: 1px solid rgba(255, 107, 53, 0.2);
-}
-
-/* ── Logout — last button ── */
-.menu-option-btn:last-of-type {
-  margin-top: 4px;
-  padding-top: 0.8rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  color: #c8c2bc !important;
-  display: block !important;
-  visibility: visible !important;
-}
-
-/* Hide arrow on logout — use X instead */
-.menu-option-btn:last-of-type::before {
-  content: '→';
-  color: #e05c5c;
-}
-
-.menu-option-btn:last-of-type:hover {
-  background: rgba(220, 53, 53, 0.1);
-  color: #e05c5c !important;
-}
-
-.menu-option-btn:last-of-type:hover::before {
-  opacity: 1;
-  transform: translateX(0);
-  color: #e05c5c;
-}
-
-/* ── Overlay ── */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.3);
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.25s ease, visibility 0s 0.25s;
-  z-index: 999;
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
-}
-
-.overlay.show {
-  visibility: visible;
-  opacity: 1;
-  transition: opacity 0.25s ease, visibility 0s 0s;
-}
-
-/* ── Animation ── */
-@keyframes dropDown {
-  from {
-    opacity: 0;
-    transform: scale(0.88) translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-/* ── Responsive ── */
-@media (max-width: 1400px) {
-  .dashboard-container { right: 1rem; }
-  .menu-options { right: 1rem; }
-}
-
-@media (max-width: 768px) {
-  .dashboard-container {
-    right: 0.75rem;
-    top: 6px;
-  }
-
-  .menu-options {
-    right: 0.75rem;
-    top: 52px;
-    width: 180px;
-  }
-
-  .profile-avatar_u {
-    width: 28px;
-    height: 28px;
-  }
-
-  .profile-name {
-    font-size: 0.75rem;
-    max-width: 75px;
-  }
-}
